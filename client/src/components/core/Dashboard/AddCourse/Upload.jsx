@@ -14,7 +14,9 @@ export default function Upload({
   editData = null,
 }) {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [previewSource, setPreviewSource] = useState(viewData || editData || "");
+  const [previewSource, setPreviewSource] = useState(
+    viewData || editData || ""
+  );
   const inputRef = useRef(null);
 
   // Drop handler
@@ -44,7 +46,7 @@ export default function Upload({
     inputRef.current.click();
   };
 
-  // ✅ Main fix: set file value in form
+  // Main fix: set file value in form
   useEffect(() => {
     if (selectedFile) {
       setValue(name, selectedFile, { shouldValidate: true });
@@ -56,12 +58,13 @@ export default function Upload({
   return (
     <div className="flex flex-col space-y-2">
       <label htmlFor={name} className="text-sm">
-                    <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
-                 {label}
-              </span>{" "} {!viewData && <sup className="text-pink-200">*</sup>}
+        <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
+          {label}
+        </span>{" "}
+        {!viewData && <sup className="text-pink-200">*</sup>}
       </label>
 
-      {/* ✅ Optional hidden input for validation */}
+      {/* Optional hidden input for validation */}
       <input type="hidden" {...register(name, { required: true })} />
 
       {/* Dropzone container */}
@@ -90,7 +93,12 @@ export default function Upload({
               />
             ) : (
               <div className="w-full rounded-md overflow-hidden">
-                <ReactPlayer url={previewSource} controls width="100%" height="auto" />
+                <ReactPlayer
+                  url={previewSource}
+                  controls
+                  width="100%"
+                  height="auto"
+                />
               </div>
             )}
             {!viewData && (
@@ -118,7 +126,8 @@ export default function Upload({
             </div>
             <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
               Drag and drop an {!video ? "image" : "video"}, or click to{" "}
-              <span className="font-semibold text-yellow-50">Browse</span> a file
+              <span className="font-semibold text-yellow-50">Browse</span> a
+              file
             </p>
             <ul className="mt-10 flex list-disc justify-between space-x-12 text-center text-xs text-richblack-200">
               <li>Aspect ratio 16:9</li>

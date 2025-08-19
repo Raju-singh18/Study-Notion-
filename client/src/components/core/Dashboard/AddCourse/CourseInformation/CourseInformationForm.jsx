@@ -284,9 +284,10 @@ const CourseInformationForm = () => {
           htmlFor="courseBenefits"
           className="text-sm font-semibold text-richblack-5 mb-1 block"
         >
-                       <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
-                Benifits Of the Course
-              </span>{" "} <sup className="text-pink-500">*</sup>
+          <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
+            Benifits Of the Course
+          </span>{" "}
+          <sup className="text-pink-500">*</sup>
         </label>
         <textarea
           id="courseBenefits"

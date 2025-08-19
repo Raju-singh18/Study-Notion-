@@ -57,15 +57,6 @@ function SignupForm() {
     // Send OTP to user for verification
     dispatch(sendOtp(formData.email, navigate))
 
-    // Reset
-    // setFormData({
-    //   firstName: "",
-    //   lastName: "",
-    //   email: "",
-    //   password: "",
-    //   confirmPassword: "",
-    // })
-    // setAccountType(ACCOUNT_TYPE.STUDENT)
   }
 
   // data to pass to Tab component

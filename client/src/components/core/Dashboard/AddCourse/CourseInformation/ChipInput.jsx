@@ -40,9 +40,10 @@ const ChipInput = ({ name, label, register, errors, setValue }) => {
   return (
     <div className="my-4">
       <label htmlFor={name} className="text-sm text-richblack-5 block mb-1">
-                      <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
-                 {label}
-              </span>{" "} <sup className="text-pink-200">*</sup>
+        <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
+          {label}
+        </span>{" "}
+        <sup className="text-pink-200">*</sup>
       </label>
       <div className="flex flex-wrap gap-2 mb-2">
         {tags.map((tag, index) => (
