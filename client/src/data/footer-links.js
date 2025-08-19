@@ -1,0 +1,61 @@
+// import { link } from "../../../SERVER/routes/User";
+
+export const FooterLink2 = [
+  {
+    title: "Subjects",
+    links: [
+      { title: "AI", link: "/ai" },
+      { title: "Cloud Computing", link: "/cloud-computing" },
+      { title: "Code foundation", link: "/code-foundation" },
+      { title: "Computer Science", link: "/computer-science" },
+      { title: "Cyber Security", link: "/cyber-security" },
+      { title: "Data Analytics", link: "/data-analytics" },
+      { title: "Data Science", link: "/data-science" },
+      { title: "Data Visualization", link: "/data-visualization" },
+      { title: "Developer Tools", link: "/developer-tools" },
+      { title: "DevOps", link: "/deveops" },
+      { title: "Game Development", link: "/game-development" },
+      { title: "IT", link: "/it" },
+      { title: "Machine Learning", link: "/machine-learning" },
+      { title: "Math", link: "/math" },
+      { title: "Mobile Development", link: "/mobile-development" },
+      { title: "Web Design", link: "/web-design" },
+      { title: "Web Development", link: "/web-development" },
+    ],
+  },
+  {
+    title: "Languages",
+    links: [
+      {
+        title: "Bash",
+        links: "/bash",
+      },
+      { title: "C++", link: "/c++" },
+      { title: "C#", link: "/c#" },
+      { title: "Go", link: "/go" },
+      { title: "HTML & CSS", link: "/html-css" },
+      { title: "Java", link: "/java" },
+      { title: "JavaScript", link: "/javascript" },
+      { title: "PHP", link: "/php" },
+      { title: "Python", link: "/python" },
+      { title: "R", link: "/r" },
+      { title: "Ruby", link: "/ruby" },
+      { title: "SQL", link: "/sql" },
+      { title: "Swift", link: "/swift" },
+    ],
+  },
+  {
+    title: "Career building",
+    links: [
+      { title: "Career Paths", link: "/career-paths" },
+      { title: "Career Services", link: "/career-services" },
+      { title: "Coding Interview Prep", link: "/interview-prep" },
+      { title: "Developer Portfolio", link: "/developer-portfolio" },
+      { title: "Resume Writing", link: "/resume-writing" },
+      { title: "Job Search", link: "/job-search" },
+      { title: "Tech Certifications", link: "/certifications" },
+      { title: "Freelancing", link: "/freelancing" },
+      { title: "Internship Programs", link: "/internships" },
+    ],
+  },
+];
