@@ -8,12 +8,12 @@ import { TiShoppingCart } from "react-icons/ti";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
 import { categories } from "../../services/apis";
 import { apiConnector } from "../../services/apiConnector";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useRef } from "react";
-import { HiSearch } from "react-icons/hi";
-import { useNavigate } from "react-router";
+// import { GiHamburgerMenu } from "react-icons/gi";
+// import { useRef } from "react";
+// import { HiSearch } from "react-icons/hi";
+// import { useNavigate } from "react-router";
 import { IoIosArrowDown } from "react-icons/io";
 
 const NavBar = () => {
