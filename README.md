@@ -1,8 +1,6 @@
 # 📚 StudyNotion – MERN Stack EdTech Platform  
 
 StudyNotion is a **full-stack EdTech platform** built using the **MERN stack** that provides a seamless learning experience for students and instructors.  
-It includes **course creation, authentication, dashboard, payments, and video content delivery** – similar to platforms like Udemy or Coursera.  
-
 ---
 
 ## 🚀 Features  
