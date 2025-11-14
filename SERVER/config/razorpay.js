@@ -13,4 +13,4 @@ exports.instance = new Razorpay({
   key_secret: process.env.RAZORPAY_SECRET,
 });
 
-console.log("Razorpay instance configured successfully");
+//console.log("Razorpay instance configured successfully");

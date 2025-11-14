@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { useForm } from "react-hook-form";
 import { RxCross2 } from "react-icons/rx";
@@ -25,10 +24,8 @@ const CourseReviewModal = ({ setReviewModal }) => {
     },
   });
 
-  // Update rating in form state
-  const ratingChanged = (newRating) => {
+  const ratingChanged = (newRating) =>
     setValue("courseRating", newRating, { shouldValidate: true });
-  };
 
   const onSubmit = async (data) => {
     await createRating(
@@ -43,11 +40,10 @@ const CourseReviewModal = ({ setReviewModal }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50 px-4">
-      <div className="bg-richblack-900 text-white rounded-lg shadow-xl w-full max-w-lg p-6 relative flex flex-col gap-6">
-        
+    <div className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm z-50 px-4">
+      <div className="bg-richblack-900 text-white rounded-xl shadow-2xl w-full max-w-md sm:max-w-lg md:max-w-xl p-6 relative">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-richblack-700 pb-3">
+        <div className="flex items-center justify-between border-b border-richblack-700 pb-3 mb-4">
           <h2 className="text-xl font-semibold">Add Review</h2>
           <button
             type="button"
@@ -59,56 +55,51 @@ const CourseReviewModal = ({ setReviewModal }) => {
         </div>
 
         {/* User Info */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-4">
           <img
             src={user?.image || "https://api.dicebear.com/5.x/initials/svg?seed=User"}
             alt="user"
-            className="w-12 h-12 rounded-full object-cover border-2 border-richblack-700"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-richblack-700"
           />
-          <div className="flex flex-col">
-            <p className="font-medium">{user?.firstName} {user?.lastName}</p>
-            <p className="text-sm text-richblack-300">Posting Publicly</p>
+          <div>
+            <p className="font-medium">
+              {user?.firstName} {user?.lastName}
+            </p>
+            <p className="text-sm text-richblack-300">Posting publicly</p>
           </div>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          
-          {/* Rating Stars */}
           <div className="flex justify-center">
             <ReactStars
               count={5}
               value={watch("courseRating")}
               onChange={ratingChanged}
-              size={32}
+              size={28}
               color="#6B7280"
               activeColor="#FFD700"
-              isHalf={false}
-              edit={true}
             />
           </div>
 
-          {/* Experience Textarea */}
-          <div className="flex flex-col gap-1">
-            <label
-              htmlFor="courseExperience"
-              className="font-medium"
-            >
-              Share Your Experience
+          <div>
+            <label htmlFor="courseExperience" className="block font-medium mb-1">
+              Share your experience
             </label>
             <textarea
               id="courseExperience"
               placeholder="Write your experience here..."
               {...register("courseExperience", { required: true })}
-              className="w-full min-h-[130px] p-3 rounded-md bg-richblack-800 border border-richblack-700 text-white resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full min-h-[120px] p-3 rounded-md bg-richblack-800 border border-richblack-700 focus:ring-2 focus:ring-yellow-400"
             />
             {errors.courseExperience && (
-              <span className="text-red-400 text-sm">Please add your experience</span>
+              <span className="text-red-400 text-sm">
+                Please add your experience
+              </span>
             )}
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-end gap-3 mt-4 flex-wrap">
+          <div className="flex flex-wrap justify-end gap-3 mt-2">
             <button
               type="button"
               onClick={() => setReviewModal(false)}

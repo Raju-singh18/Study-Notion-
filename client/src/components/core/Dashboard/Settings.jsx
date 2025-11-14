@@ -1,43 +1,35 @@
-import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   updateAdditionalDetails,
   updatePassword,
   updatePfp,
   deleteAccount,
 } from "../../../services/operations/profileAPI";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { AiOutlineEye } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Settings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.profile.user);
 
-  //update profile picture
-  const pfp = useSelector((state) => state.profile.user.image);
-  const [profilePicture, setprofilePicture] = useState(pfp);
-  const token = useSelector((state) => state.auth.token);
+  const { user } = useSelector((state) => state.profile);
+  const { token } = useSelector((state) => state.auth);
 
-  //   console.log("token is: ", token);
+  // Profile Picture
+  const [profilePicture, setProfilePicture] = useState(user?.image || "");
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setProfilePicture(URL.createObjectURL(file));
+  };
 
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    // console.log("token inside handleUpload: ", token);
     updatePfp(token, file);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setprofilePicture(URL.createObjectURL(file));
-  };
-
-  //update additional info
+  // Additional Info
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
@@ -58,19 +50,15 @@ const Settings = () => {
     });
   }, [user]);
 
-  const handleOnChange = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handleOnChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handelAdditionalDetails = (e) => {
+  const handleSaveDetails = (e) => {
     e.preventDefault();
     updateAdditionalDetails(token, formData);
   };
 
-  //update password
+  // Password Update
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [password, setPassword] = useState({
@@ -79,24 +67,19 @@ const Settings = () => {
     confirmPassword: "",
   });
 
-  const handleOnChangePassword = (e) => {
-    setPassword((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handlePasswordChange = (e) =>
+    setPassword((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handlePassword = (e) => {
+  const handlePasswordSubmit = (e) => {
     e.preventDefault();
-    const { newPassword, confirmPassword } = password;
-    if (newPassword === confirmPassword) {
+    if (password.newPassword === password.confirmPassword) {
       updatePassword(token, password);
     } else {
-      alert("Password does not match");
+      alert("Passwords do not match");
     }
   };
 
-  //delete account
+  // Delete Account
   const onDeleteAccount = () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       deleteAccount(token, dispatch, navigate);
@@ -104,330 +87,233 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <div className=" flex-1 overflow-auto">
-        <div className="mx-auto w-11/12 max-w-[1000px] py-10">
-          <h1 className="mb-14 text-3xl font-medium text-richblack-5">
-            Edit Profile
-          </h1>
+    <div className="w-full flex justify-center bg-richblack-900 text-richblack-5">
+      <div className="w-11/12 max-w-[1000px] mx-auto py-10">
+        <h1 className="mb-10 text-3xl font-semibold text-yellow-400 text-center md:text-left">
+          Edit Profile
+        </h1>
 
-          {/* update profile picture */}
-          <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 md:p-8 md:px-12 px-3 py-3 text-richblack-5">
-            <div className="flex items-center gap-x-4">
-              <img
-                className="aspect-square w-[78px] rounded-full object-cover"
-                src={profilePicture}
-              ></img>
-              <div className="space-y-2">
-                <p>Change Profile Picture</p>
-                <form onSubmit={handleUpload}>
-                  <div className="flex flex-row gap-3">
-                    <label
-                      className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50'"
-                      htmlFor="upload"
-                    >
-                      Select
-                      <input
-                        id="upload"
-                        type="file"
-                        onChange={handleFileChange}
-                        className="hidden"
-                        accept="image/png, image/gif, image/jpeg"
-                      />
-                    </label>
-                    <button
-                      type="submit"
-                      className="flex items-center bg-yellow-50 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-900 undefined"
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </form>
-              </div>
+       
+        {/* update profile picture */}
+        <div className="flex flex-col md:flex-row items-center justify-between rounded-md border border-richblack-700 bg-richblack-800 p-4 md:p-8 text-richblack-5 gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-4 w-full">
+            <img
+              className="aspect-square w-[78px] rounded-full object-cover"
+              src={profilePicture}
+              alt="Profile"
+            />
+
+            <div className="space-y-2 w-full md:w-auto">
+              <p className="font-medium text-richblack-5">
+                Change Profile Picture
+              </p>
+              <form
+                onSubmit={handleUpload}
+                className="flex flex-wrap items-center gap-3 w-full"
+              >
+                <label
+                  htmlFor="upload"
+                  className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50 hover:bg-richblack-600 transition-all duration-300"
+                >
+                  Select
+                  <input
+                    id="upload"
+                    type="file"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    accept="image/png, image/gif, image/jpeg"
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="bg-yellow-50 text-richblack-900 rounded-md py-2 px-5 font-semibold shadow-md hover:bg-yellow-100 hover:scale-[1.02] transition-all duration-300"
+                >
+                  Upload
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Info */}
+        <form
+          onSubmit={handleSaveDetails}
+          className="my-10 rounded-2xl border border-richblack-700 bg-richblack-800 p-6 md:p-10"
+        >
+          <h2 className="text-xl font-semibold mb-6">Profile Information</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label className="text-richblack-50">First Name</label>
+              <input
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleOnChange}
+                placeholder="Enter first name"
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
+            </div>
+            <div>
+              <label className="text-richblack-50">Last Name</label>
+              <input
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleOnChange}
+                placeholder="Enter last name"
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
+            </div>
+            <div>
+              <label className="text-richblack-50">Date of Birth</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleOnChange}
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
+            </div>
+            <div>
+              <label className="text-richblack-50">Gender</label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleOnChange}
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              >
+                <option value="">Select Gender</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-Binary">Non-Binary</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-richblack-50">Contact Number</label>
+              <input
+                name="contactNumber"
+                value={formData.contactNumber}
+                onChange={handleOnChange}
+                placeholder="Enter contact number"
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
+            </div>
+            <div>
+              <label className="text-richblack-50">About</label>
+              <input
+                name="about"
+                value={formData.about}
+                onChange={handleOnChange}
+                placeholder="Write about yourself"
+                className="w-full rounded-md border border-richblack-600 bg-richblack-700 p-3 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
             </div>
           </div>
 
-          {/* update additional info */}
-          <form onSubmit={handelAdditionalDetails}>
-            <div className="my-10 rounded-2xl border border-richblack-700 bg-richblack-800 p-8 px-12 shadow-lg transition-all duration-300 hover:shadow-2xl">
-              <h2 className="text-lg font-semibold text-richblack-5 mb-4">
-                Profile Information
-              </h2>
+          <div className="flex justify-end mt-6">
+            <button
+              type="submit"
+              className="bg-yellow-50 text-richblack-900 rounded-md py-2 px-6 font-semibold shadow hover:bg-yellow-100 transition-all"
+            >
+              Save
+            </button>
+          </div>
+        </form>
 
-              {/* Name Fields */}
-              <div className="flex flex-col gap-5 lg:flex-row">
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="firstName" className="text-richblack-50">
-                    First Name
-                  </label>
-                  <input
-                    defaultValue={user.firstName || ""}
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="Enter first name"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 placeholder:text-richblack-400 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  />
-                </div>
+        {/* Password Update */}
+        <form
+          onSubmit={handlePasswordSubmit}
+          className="rounded-2xl border border-richblack-700 bg-richblack-800 p-6 md:p-10"
+        >
+          <h2 className="text-xl font-semibold mb-6">Change Password</h2>
 
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="lastName" className="text-richblack-50">
-                    Last Name
-                  </label>
-                  <input
-                    defaultValue={user.lastName || ""}
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    placeholder="Enter last name"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 placeholder:text-richblack-400 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  />
-                </div>
-              </div>
-
-              {/* DOB & Gender */}
-              <div className="mt-6 flex flex-col gap-5 lg:flex-row">
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="dateOfBirth" className="text-richblack-50">
-                    Date of Birth
-                  </label>
-                  <input
-                    defaultValue={user?.additionalDetails?.dateOfBirth || ""}
-                    type="date"
-                    name="dateOfBirth"
-                    id="dateOfBirth"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="gender" className="text-richblack-50">
-                    Gender
-                  </label>
-                  <select
-                    defaultValue={user?.additionalDetails?.gender || ""}
-                    name="gender"
-                    id="gender"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Non-Binary">Non-Binary</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Contact & About */}
-              <div className="mt-6 flex flex-col gap-5 lg:flex-row">
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="contactNumber" className="text-richblack-50">
-                    Contact Number
-                  </label>
-                  <input
-                    defaultValue={user?.additionalDetails?.contactNumber || ""}
-                    type="tel"
-                    name="contactNumber"
-                    id="contactNumber"
-                    placeholder="Enter Contact Number"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 placeholder:text-richblack-400 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2 lg:w-[48%]">
-                  <label htmlFor="about" className="text-richblack-50">
-                    About
-                  </label>
-                  <input
-                    defaultValue={user?.additionalDetails?.about || ""}
-                    type="text"
-                    name="about"
-                    id="about"
-                    placeholder="Enter bio or description"
-                    className="rounded-md border border-richblack-600 bg-richblack-700 p-3 text-richblack-5 placeholder:text-richblack-400 focus:border-yellow-200 focus:outline-none focus:ring-1 focus:ring-yellow-200"
-                    onChange={handleOnChange}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                className="rounded-md bg-yellow-50 px-6 py-2 font-semibold text-richblack-900 shadow-md transition-all duration-300 hover:scale-[1.02] hover:bg-yellow-100 hover:shadow-lg"
+          {["oldPassword", "newPassword", "confirmPassword"].map((field, i) => (
+            <div key={field} className="relative mt-4">
+              <label className="text-richblack-50 capitalize">
+                {field.replace(/([A-Z])/g, " $1")}
+              </label>
+              <input
+                required
+                type={
+                  i === 0
+                    ? showPassword
+                      ? "text"
+                      : "password"
+                    : showConfirmPassword
+                    ? "text"
+                    : "password"
+                }
+                name={field}
+                value={password[field]}
+                onChange={handlePasswordChange}
+                placeholder={`Enter ${field}`}
+                className="w-full rounded-md bg-richblack-700 p-3 pr-12 mt-1 focus:border-yellow-200 focus:ring-1 focus:ring-yellow-200"
+              />
+              <span
+                onClick={() =>
+                  i === 0
+                    ? setShowPassword((prev) => !prev)
+                    : setShowConfirmPassword((prev) => !prev)
+                }
+                className="absolute right-3 top-10 cursor-pointer"
               >
-                Save
-              </button>
+                {i === 0 ? (
+                  showPassword ? (
+                    <AiOutlineEyeInvisible size={22} />
+                  ) : (
+                    <AiOutlineEye size={22} />
+                  )
+                ) : showConfirmPassword ? (
+                  <AiOutlineEyeInvisible size={22} />
+                ) : (
+                  <AiOutlineEye size={22} />
+                )}
+              </span>
             </div>
-          </form>
+          ))}
 
-          {/* update Password */}
-          <form onSubmit={handlePassword}>
-            <div>
-              <div className=" relative mt-4">
-                <label className="w-full">
-                  <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                    Old Password <sup className="text-pink-200">*</sup>
-                  </p>
-                  <input
-                    required
-                    type={showPassword ? "text" : "password"}
-                    name="oldPassword"
-                    value={password.oldPassword}
-                    onChange={handleOnChangePassword}
-                    placeholder="Enter Password"
-                    style={{
-                      boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                    }}
-                    className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
-                  />
-                </label>
-                <span
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="absolute right-3 top-9 z-[10] cursor-pointer"
-                >
-                  {showPassword ? (
-                    <AiOutlineEyeInvisible
-                      fontSize={24}
-                      fill="#AFB2BF"
-                      color="white"
-                      className=""
-                    />
-                  ) : (
-                    <AiOutlineEye fontSize={24} fill="#AFB2BF" color="white" />
-                  )}
-                </span>
-              </div>
-              <div className=" relative mt-4">
-                <label className="w-full">
-                  <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                    New Password <sup className="text-pink-200">*</sup>
-                  </p>
-                  <input
-                    required
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="newPassword"
-                    value={password.newPassword}
-                    onChange={handleOnChangePassword}
-                    placeholder="Enter Password"
-                    style={{
-                      boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                    }}
-                    className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
-                  />
-                </label>
-                <span
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute right-3 top-9 z-[10] cursor-pointer"
-                >
-                  {showConfirmPassword ? (
-                    <AiOutlineEyeInvisible
-                      fontSize={24}
-                      fill="#AFB2BF"
-                      color="white"
-                      className=""
-                    />
-                  ) : (
-                    <AiOutlineEye fontSize={24} fill="#AFB2BF" color="white" />
-                  )}
-                </span>
-              </div>
-              <div className=" relative mt-4">
-                <label className="w-full">
-                  <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                    Confirm New Password <sup className="text-pink-200">*</sup>
-                  </p>
-                  <input
-                    required
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    value={password.confirmPassword}
-                    onChange={handleOnChangePassword}
-                    placeholder="Enter Password"
-                    style={{
-                      boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                    }}
-                    className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5"
-                  />
-                </label>
-                <span
-                  onClick={() => setShowConfirmPassword((prev) => !prev)}
-                  className="absolute right-3 top-10 z-[10] cursor-pointer"
-                >
-                  {showConfirmPassword ? (
-                    <AiOutlineEyeInvisible
-                      fontSize={24}
-                      fill="#AFB2BF"
-                      color="white"
-                      className=""
-                    />
-                  ) : (
-                    <AiOutlineEye fontSize={24} fill="#AFB2BF" color="white" />
-                  )}
-                </span>
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 mt-3">
-              <button
-                className="flex items-center bg-yellow-50 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-900 undefined"
-                type="submit"
-              >
-                Save
-              </button>
-            </div>
-          </form>
+          <div className="flex justify-end mt-6">
+            <button
+              type="submit"
+              className="bg-yellow-50 text-richblack-900 rounded-md py-2 px-6 font-semibold shadow hover:bg-yellow-100 transition-all"
+            >
+              Update Password
+            </button>
+          </div>
+        </form>
 
-          {/* Delete Account */}
-          <div className="my-10 flex flex-row gap-x-5 rounded-md border-[1px] border-pink-700 bg-pink-900 p-3 md:p-8 md:px-12">
-            <div className="flex aspect-square h-14 w-14 items-center justify-center rounded-full bg-pink-700">
-              <svg
-                stroke="currentColor"
-                fill="none"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+        {/* Delete Account */}
+        <div className="my-10 flex flex-col md:flex-row items-start gap-5 rounded-md border border-pink-700 bg-pink-900 p-6 md:p-10">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-pink-700">
+            <svg
+              onClick={onDeleteAccount}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              className="text-pink-200 h-6 w-6 cursor-pointer"
+            >
+              <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-3xl text-pink-200"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-                onClick={onDeleteAccount}
-              >
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                <line x1="10" y1="11" x2="10" y2="17"></line>
-                <line x1="14" y1="11" x2="14" y2="17"></line>
-              </svg>
-            </div>
-
-            <div className="flex flex-col space-y-2 w-full">
-              <h2 className="text-lg font-semibold text-richblack-5">
-                Delete Account
-              </h2>
-              <div className="md:w-3/5 text-pink-25">
-                <p>Would you like to delete account?</p>
-                <p>
-                  This account may contain Paid Courses. Deleting your account
-                  is permanent and will remove all the contain associated with
-                  it.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={onDeleteAccount}
-                className="w-fit cursor-pointer italic text-pink-300"
-              >
-                I want to delete my account.
-              </button>
-            </div>
+                d="M6 6h12M9 6V4h6v2m2 0v14a2 2 0 01-2 2H8a2 2 0 01-2-2V6z"
+              />
+            </svg>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <h2 className="text-lg font-semibold">Delete Account</h2>
+            <p className="text-pink-200">
+              Deleting your account will permanently remove all your courses and
+              data.
+            </p>
+            <button
+              onClick={onDeleteAccount}
+              className="text-pink-300 italic hover:text-pink-100 transition-all"
+            >
+              I want to delete my account.
+            </button>
           </div>
         </div>
       </div>

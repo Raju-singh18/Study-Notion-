@@ -6,10 +6,13 @@ const User = require("../models/User");
 exports.auth = async (req, res, next) => {
   try {
     // Extract token from cookies, body or headers
+    //console.log("token through cookie:",req.cookies.token);
     const token =
       req.cookies?.token ||
       req.body?.token ||
       req.header("Authorization")?.replace("Bearer ", "");
+      
+      // console.log("token through cookie:",req.cookies?.token);
 
     if (!token) {
       return res.status(401).json({
@@ -21,7 +24,7 @@ exports.auth = async (req, res, next) => {
     try {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded user from token:", decoded);
+    //  console.log("Decoded user from token:", decoded);
       req.user = decoded;
     } catch (error) {
       return res.status(401).json({
@@ -32,7 +35,7 @@ exports.auth = async (req, res, next) => {
 
     next(); // proceed to next middleware or route handler
   } catch (error) {
-    console.error("Auth Middleware Error:", error);
+   // console.error("Auth Middleware Error:", error);
     return res.status(500).json({
       success: false,
       message: "Something went wrong during token validation",

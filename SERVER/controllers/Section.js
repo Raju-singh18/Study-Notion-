@@ -41,7 +41,7 @@ exports.createSection = async (req, res) => {
       updatedCourseDetails,
     });
   } catch (error) {
-    console.log("Error creating section:", error);
+    //console.log("Error creating section:", error);
     return res.status(500).json({
       success: false,
       message: "Unable to create section. Please try again.",
@@ -87,7 +87,7 @@ exports.updateSection = async (req, res) => {
       data: course,
     });
   } catch (error) {
-    console.log("Error updating section:", error);
+   // console.log("Error updating section:", error);
     return res.status(500).json({
       success: false,
       message: "Unable to update section. Please try again.",
@@ -109,7 +109,7 @@ exports.deleteSection = async (req, res) => {
 			}
 		})
 		const section = await Section.findById(sectionId);
-		console.log(sectionId, courseId);
+		//console.log(sectionId, courseId);
 		if(!section) {
 			return res.status(404).json({
 				success:false,
@@ -137,7 +137,7 @@ exports.deleteSection = async (req, res) => {
 			data:course
 		});
 	} catch (error) {
-		console.error("Error deleting section:", error);
+		//console.error("Error deleting section:", error);
 		res.status(500).json({
 			success: false,
 			message: "Internal server error",

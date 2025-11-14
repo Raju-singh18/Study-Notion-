@@ -54,7 +54,7 @@ exports.sendOTP = async (req, res) => {
 
     const otpPayload = { email, otp };
     const otpBody = await OTP.create(otpPayload);
-    console.log("OTP Body", otpBody);
+    // console.log("OTP Body", otpBody);
 
     try {
       const emailResponse = await mailSender(
@@ -62,9 +62,9 @@ exports.sendOTP = async (req, res) => {
         "Verify Email with OTP",
         otpTemplate(otp)
       );
-      console.log("emailResponse", emailResponse);
+      // console.log("emailResponse", emailResponse);
     } catch (error) {
-      console.error("Error occured while sending email:", error);
+      // console.error("Error occured while sending email:", error);
       return res.status(500).json({
         success: false,
         message: "Error occured while sending email",
@@ -129,12 +129,12 @@ exports.signup = async (req, res) => {
         message: "User already exists. Please sign in to continue",
       });
     }
-
+    
     //Find the most recent OTP for the email
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log("Recent Otp: ", recentOtp);
+    // console.log("Recent Otp: ", recentOtp);
 
     if (!recentOtp || recentOtp[0].otp !== otp) {
       return res
@@ -168,7 +168,7 @@ exports.signup = async (req, res) => {
       image: avatar,
       additionalDetails: profile._id,
     });
-    console.log("user Details: ", user);
+   // console.log("user Details: ", user);
 
     return res
       .status(200)
@@ -195,7 +195,7 @@ exports.login = async (req, res) => {
 
     // find user with provided email
     const user = await User.findOne({ email }); //populate("additionalDetails");
-    console.log("User details without populating of additionalDetails: ", user);
+    // console.log("User details without populating of additionalDetails: ", user);
     // if usr not found with provided email
     if (!user)
       // return 401 unauthorize status code woth error message
@@ -217,9 +217,10 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
       };
       const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "1d",
       });
-      console.log("token is: ", token);
+      
+      // console.log("token is: ", token);
 
       // save token to user document in database
       user.token = token;
@@ -227,11 +228,16 @@ exports.login = async (req, res) => {
 
       // Set cookie for token and return success response
       const options = {
-        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production" ? true : false, // true only in production
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
       };
 
-      res.cookie("token", token, options).status(200).json({
+      //Attach cookie before sending response
+      res.cookie("token", token, options);
+
+      return res.status(200).json({
         success: true,
         message: "User Login successful",
         token,
@@ -302,7 +308,7 @@ exports.changePassword = async (req, res) => {
       { new: true }
     );
 
-    console.log("Updated detailed: ", updateUserDetails);
+    // console.log("Updated detailed: ", updateUserDetails);
 
     // Send notification email
     try {
@@ -317,7 +323,7 @@ exports.changePassword = async (req, res) => {
       console.log("Email sent successfully:", emailResponse.response);
     } catch (error) {
       // if there is an error sending the email, log the error and return a 500(internal server error)
-      console.error("Error occured while sending email:", error);
+    //  console.error("Error occured while sending email:", error);
       return res.status(500).json({
         success: false,
         message: "Error occured while sending email",
@@ -330,7 +336,7 @@ exports.changePassword = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Password updated successfully" });
   } catch (error) {
-    console.error("Error occured while updating password:", error);
+  //  console.error("Error occured while updating password:", error);
     return res.status(500).json({
       success: false,
       message: "Error occured while updating password",
@@ -339,14 +345,13 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-
 // ===================
 // ! Email verification
 // ====================
 exports.verifyEmail = async (req, res) => {
   try {
-    const {email, otp } = req.body;
-    console.log("Client OTP:", otp);
+    const { email, otp } = req.body;
+   // console.log("Client OTP:", otp);
 
     if (!otp) {
       return res.status(400).json({
@@ -356,10 +361,12 @@ exports.verifyEmail = async (req, res) => {
     }
 
     // find the latest matching otp
-    const recentOtp = await OTP.findOne({email}).sort({ createdAt: -1 }).exec();
-    console.log("Stored OTP:", recentOtp?.otp);
+    const recentOtp = await OTP.findOne({ email })
+      .sort({ createdAt: -1 })
+      .exec();
+   // console.log("Stored OTP:", recentOtp?.otp);
 
-    console.log("latest OTP model data :", recentOtp);
+   // console.log("latest OTP model data :", recentOtp);
 
     if (!recentOtp || recentOtp.otp !== otp) {
       return res.status(400).json({
@@ -367,14 +374,12 @@ exports.verifyEmail = async (req, res) => {
         message: "Invalid or expired OTp",
       });
     }
-
     return res.status(200).json({
       success: true,
       message: "Email verified successfully. Your email is now verfied.",
-
     });
   } catch (error) {
-    console.error("Error verifying OTP:", error);
+   // console.error("Error verifying OTP:", error);
     return res.status(500).json({
       success: false,
       message: "Something went wrong while verifying OTP",

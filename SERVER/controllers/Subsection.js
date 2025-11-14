@@ -14,11 +14,11 @@ exports.createSubSection = async (req,res) =>{
                 message:'All fields are required',
             });
         }
-         console.log("Video", video);
+        //  console.log("Video", video);
 
          //upload the video file to Cloudinary
         const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME);
-          console.log("uploadDetails of video in server", uploadDetails);
+         // console.log("uploadDetails of video in server", uploadDetails);
 //create a new subSection with the neccesssary information 
         const newSubSection = await SubSection.create({
             title,
@@ -35,7 +35,7 @@ exports.createSubSection = async (req,res) =>{
            data: updatedSection
         })   
     } catch (error) {
-        console.error(error);
+        //console.error(error);
         return res.status(500).json({
             success:false,
             message:'Failed to create SubSection',
@@ -84,7 +84,7 @@ exports.updateSubSection = async (req, res) => {
         message: "Section updated successfully",
       })
     } catch (error) {
-      console.error(error)
+     // console.error(error)
       return res.status(500).json({
         success: false,
         message: "An error occurred while updating the section",
@@ -129,7 +129,7 @@ exports.deleteSubSection = async (req,res) =>{
         message: "SubSection deleted successfully",
       })
     } catch (error) {
-        console.error(error);
+        //console.error(error);
         return res.status(500).json({
             success:false,
             message:'Failed to delete SubSection',

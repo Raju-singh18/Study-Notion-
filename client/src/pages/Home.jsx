@@ -1,5 +1,3 @@
- 
-
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
@@ -44,7 +42,7 @@ const Home = () => {
   }, [categoryID]);
 
   return (
-    <div className="bg-richblack-900 text-white">
+    <div className="bg-richblack-900 text-white pt-16">
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center text-center py-12 px-4 sm:px-6 lg:px-10">
         <NavLink to="/signup">
@@ -111,21 +109,17 @@ const Home = () => {
       </section>
 
       {/* First CodeBlocks Section */}
-      <div className="w-full max-w-5xl mx-auto my-12">
+      <section className="w-full max-w-5xl mx-auto my-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
         <CodeBlocks
-          position="flex flex-col lg:flex-row"
+          position="flex flex-col lg:flex-row items-center justify-center text-center lg:text-left"
           heading={
-            <div className="text-4xl font-semibold">
+            <div className="text-3xl sm:text-4xl font-semibold text-center lg:text-left">
               Unlock Your <HighlightText text="coding potential" /> with our
               online courses
             </div>
           }
           subheading="Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
-          ctabtn1={{
-            btnText: "Try it yourself",
-            linkto: "/signup",
-            active: true,
-          }}
+          ctabtn1={{ btnText: "Try it yourself", linkto: "/signup", active: true }}
           ctabtn2={{ btnText: "Learn more", linkto: "/login", active: false }}
           codeblock={`<!DOCTYPE html>
 <html lang="en">
@@ -138,17 +132,13 @@ const Home = () => {
 </html>`}
           codeColor="text-yellow-50"
         />
-      </div>
+      </section>
 
-      {/* Most Popular Courses Title */}
-      <div className="w-full max-w-6xl mx-auto my-12 text-center">
+      {/* Most Popular Courses */}
+      <section className="w-full max-w-6xl mx-auto my-12 text-center">
         <h2 className="text-4xl font-bold text-white mb-6">
           Most Popular Courses
         </h2>
-      </div>
-
-      {/* Course Slider Section */}
-      <div className="my-6 w-full max-w-6xl mx-auto">
         {loading ? (
           <p className="text-white text-center text-lg">Loading courses...</p>
         ) : catalogPageData?.data?.mostSellingCourses?.length > 0 ? (
@@ -156,23 +146,19 @@ const Home = () => {
         ) : (
           <p className="text-center text-gray-500 text-lg">No Courses Found</p>
         )}
-      </div>
+      </section>
 
       {/* Second CodeBlocks Section */}
-      <div className="w-full max-w-5xl mx-auto my-12">
+      <section className="w-full max-w-5xl mx-auto my-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
         <CodeBlocks
-          position="flex flex-col lg:flex-row-reverse"
+          position="flex flex-col lg:flex-row-reverse items-center justify-center text-center lg:text-left"
           heading={
-            <div className="text-4xl font-semibold">
+            <div className="text-3xl sm:text-4xl font-semibold text-center lg:text-left">
               Start <HighlightText text="coding in Seconds" />
             </div>
           }
           subheading="Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lessons."
-          ctabtn1={{
-            btnText: "Continue Lesson",
-            linkto: "/signup",
-            active: true,
-          }}
+          ctabtn1={{ btnText: "Continue Lesson", linkto: "/signup", active: true }}
           ctabtn2={{ btnText: "Learn more", linkto: "/login", active: false }}
           codeblock={`<!DOCTYPE html>
 <html lang="en">
@@ -185,16 +171,18 @@ const Home = () => {
 </html>`}
           codeColor="text-yellow-50"
         />
-      </div>
+      </section>
 
       {/* Instructor Section */}
       <InstructorSection />
 
       {/* Reviews Section */}
-      <h1 className="text-center text-4xl font-semibold mt-20">
-        Reviews from other learners
-      </h1>
-      <ReviewSlider />
+      <section className="mt-20 mb-12">
+        <h1 className="text-center text-4xl font-semibold mb-8">
+          Reviews from other learners
+        </h1>
+        <ReviewSlider />
+      </section>
 
       {/* Footer */}
       <Footer />

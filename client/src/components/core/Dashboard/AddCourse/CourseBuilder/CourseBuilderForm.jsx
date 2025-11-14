@@ -98,7 +98,7 @@ export default function CourseBuilderForm() {
   };
 
   return (
-    <div className="space-y-8 rounded-lg border border-richblack-700 bg-richblack-800 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-300">
+    <div className="space-y-8 rounded-lg border border-richblack-700 bg-richblack-800 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] transition-all duration-300 mb-6">
       <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-transparent bg-clip-text">
         Course Builder
       </h2>

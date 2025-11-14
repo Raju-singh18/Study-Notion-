@@ -116,8 +116,6 @@ const CourseInformationForm = () => {
       } else {
         toast.error("No changes made so far");
       }
-      console.log("PRINTING FORMDATA", formData);
-      console.log("PRINTING result", result);
       return;
     }
 
@@ -131,12 +129,10 @@ const CourseInformationForm = () => {
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STATUS.DRAFT);
     formData.append("tag", JSON.stringify(data.courseTags));
-    console.log("Image", data.courseImage);
+   
     formData.append("thumbnailImage", data.courseImage);
 
     setLoading(true);
-    console.log("BEFORE add course API call");
-    console.log("PRINTING FORMDATA", formData);
 
     const result = await addCourseDetails(formData, token);
     if (result) {
@@ -144,9 +140,6 @@ const CourseInformationForm = () => {
       dispatch(setCourse(result));
     }
     setLoading(false);
-    console.log("AFTER add course API call");
-    console.log("PRINTING FORMDATA", formData);
-    console.log("PRINTING result", result);
   };
 
   return (

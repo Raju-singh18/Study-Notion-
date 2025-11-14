@@ -81,7 +81,7 @@ export default function SubSectionModal({
 
     if (edit) {
       if (!isFormUpdated()) {
-        toast.error("No changes made to the form");
+        console.error("No changes made to the form");
       } else {
         handleEditSubsection();
       }
@@ -97,7 +97,6 @@ export default function SubSectionModal({
       setLoading(true);
 
       const result = await createSubSection(formData, token);
-      console.log("✅ result of createSubSection =>", result);
 
       if (result) {
         //  result is updatedSection directly

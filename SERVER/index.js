@@ -22,7 +22,7 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 
 // Server PORT
-console.log(process.env.PORT);
+// console.log(process.env.PORT);
 const PORT = process.env.PORT || 4000;
 
 // Connect DB
@@ -37,8 +37,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: "http://localhost:3000", // your react aapp
+    credentials: true, 
   })
 );
 
@@ -76,3 +76,4 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`App is running at http://localhost:${PORT}`);
 });
+

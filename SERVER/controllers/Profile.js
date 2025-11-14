@@ -58,7 +58,7 @@ exports.updateProfilePicture = async (req, res) => {
     // 7. Delete temp file (optional cleanup)
     fs.unlink(file.tempFilePath, (err) => {
       if (err) {
-        console.error("Error deleting temp file:", err);
+       console.error("Error deleting temp file:", err);
       }
     });
     // send response
@@ -68,7 +68,7 @@ exports.updateProfilePicture = async (req, res) => {
       imageUrl: uploadResult.secure_url,
     });
   } catch (error) {
-    console.error("Error updating profile picture:", error);
+   // console.error("Error updating profile picture:", error);
     return res.status(500).json({
       success: false,
       message: "Failed to update profile picture",
@@ -83,16 +83,16 @@ exports.updateProfilePicture = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     // Get data from request body
-    console.log("req body", req.body);
+   // console.log("req body", req.body);
     const { dateOfBirth, about = "", contactNumber, gender } = req.body;
 
-    console.log("dob: ", dateOfBirth);
-    console.log("about: ", about);
-    console.log("Contact : ", contactNumber);
-    console.log("gender :", gender);
+    //console.log("dob: ", dateOfBirth);
+   // console.log("about: ", about);
+   // console.log("Contact : ", contactNumber);
+   // console.log("gender :", gender);
     // Get current user ID from req.user (decoded from JWT)
     const id = req.user.id;
-    console.log("user id :", id);
+    //console.log("user id :", id);
 
     // Basic validation
     if (!contactNumber || !gender || !id) {
@@ -217,7 +217,7 @@ exports.getAllUserDetails = async (req, res) => {
 exports.getUserEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log("User ID from token:", userId);
+   // console.log("User ID from token:", userId);
 
     // Fetch user with populated courses, sections, lectures, category, instructor
     let user = await User.findById(userId)
@@ -244,7 +244,7 @@ exports.getUserEnrolledCourses = async (req, res) => {
       });
     }
 
-    console.log("userDetails in getUserEnrolledCourses", user);
+   // console.log("userDetails in getUserEnrolledCourses", user);
 
     user = user.toObject(); // convert Mongoose doc to plain object
 
@@ -291,7 +291,7 @@ exports.getUserEnrolledCourses = async (req, res) => {
       data: user.courses,
     });
   } catch (error) {
-    console.error("ERROR IN getUserEnrolledCourses:", error);
+  //console.error("ERROR IN getUserEnrolledCourses:", error);
     return res.status(500).json({
       success: false,
       message: "Server Error",
@@ -338,7 +338,7 @@ exports.instructorDashboard = async(req , res)=>{
     });
     
   } catch (error) {
-    console.error(error);
+    //console.error(error);
     res.status(500).json({
       success:false,
       message:"Internal Server Error"

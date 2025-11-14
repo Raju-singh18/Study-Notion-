@@ -17,12 +17,13 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+    <div className="flex min-h-screen bg-richblack-900 text-richblack-5 pt-[3.5rem]">
+      {/* Sidebar - static below navbar */}
       <Sidebar />
-      <div className="w-full bg-richblack-900 text-richblack-5">
-        <div className="mx-auto w-11/12 max-w-[1000px] py-10">
-          <Outlet />
-        </div>
+
+      {/* Main Content - scrollable */}
+      <div className="flex-1 overflow-auto h-[calc(100vh-3.5rem)] px-6 lg:px-12">
+        <Outlet />
       </div>
     </div>
   );

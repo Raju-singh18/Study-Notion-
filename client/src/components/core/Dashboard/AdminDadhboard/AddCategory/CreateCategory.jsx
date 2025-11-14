@@ -21,10 +21,6 @@ const CreateCategory = () => {
 
       const data = { name, description };
       const response = await createCategory(data, token);
-      console.log("API Raw Response:", response);  
-      console.log("API Raw Response DATA:", response.data);
-    
-
       if (response) {
         toast.success("Category created successfully");
       }

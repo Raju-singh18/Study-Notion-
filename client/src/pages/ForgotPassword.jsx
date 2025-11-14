@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getPasswordResetToken } from "../services/operations/authAPI";
@@ -18,24 +17,24 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="text-richblack-5 flex items-center justify-center min-h-[90vh] px-4">
+    <div className="flex items-center justify-center min-h-[90vh] px-4 bg-richblack-900">
       {loading ? (
         <div className="flex items-center justify-center h-screen">
           <CircleLoader color="#facc15" size={80} />
         </div>
       ) : (
-        <div className="w-full max-w-md bg-richblack-800 p-8 rounded-xl shadow-md">
-          <h1 className="text-2xl font-semibold mb-4 text-center">
+        <div className="w-full max-w-md bg-richblack-800 p-8 rounded-xl shadow-lg">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-center text-richblack-5">
             {!emailSent ? "Reset Your Password" : "Check Your Email"}
           </h1>
-          <p className="text-sm text-richblack-300 mb-6 text-center">
+          <p className="text-sm sm:text-base text-richblack-300 mb-6 text-center leading-relaxed">
             {!emailSent
-              ? "Have no fear. We'll email you intructions to reset your password. If you donot have access to your email we can try account recovery"
+              ? "Have no fear. We'll email you instructions to reset your password. If you do not have access to your email, we can try account recovery."
               : `We have sent the reset email to ${email}`}
           </p>
           <form onSubmit={handleOnSubmit} className="space-y-6">
             {!emailSent && (
-              <label className="block space-y-2">
+              <label className="block space-y-2 w-full">
                 <p className="text-sm text-richblack-5">Email Address:</p>
                 <input
                   type="email"
@@ -51,7 +50,7 @@ function ForgotPassword() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-yellow-50 py-2 px-4 text-richblack-900 font-semibold hover:bg-yellow-100 transition-all duration-200"
+              className="w-full rounded-lg bg-yellow-50 py-3 text-richblack-900 font-semibold hover:bg-yellow-100 transition-all duration-200"
             >
               {!emailSent ? "Reset Password" : "Resend Email"}
             </button>
@@ -59,7 +58,7 @@ function ForgotPassword() {
 
           <div className="mt-6 text-center">
             <Link to="/login">
-              <p className="text-sm text-richblack-100 underline hover:text-yellow-50 transition-all duration-150">
+              <p className="text-sm sm:text-base text-richblack-100 underline hover:text-yellow-50 transition-all duration-150">
                 Back to Login
               </p>
             </Link>

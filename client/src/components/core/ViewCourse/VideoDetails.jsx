@@ -1,4 +1,3 @@
- 
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -128,9 +127,9 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="flex gap-6 min-h-screen bg-richblack-900">
+    <div className="flex flex-col md:flex-row bg-richblack-900 min-h-screen pt-[3.5rem]">
       {/* Video + Info */}
-      <div className="flex-1 flex flex-col gap-6 p-6">
+      <div className="flex-1 flex flex-col gap-6 p-4 md:p-6">
         <div className="relative bg-black rounded-lg overflow-hidden shadow-xl">
           {!videoData ? (
             <div className="text-white p-6 text-lg font-medium">
@@ -215,17 +214,14 @@ const CourseDetails = () => {
 
         {/* Video Info */}
         <div className="bg-richblack-800 p-6 rounded-2xl shadow-2xl flex flex-col gap-4 border border-richblack-600 hover:shadow-purple-600/50 transition-shadow duration-300">
-          {/* Title */}
           <h1 className="text-2xl md:text-3xl font-bold text-richblack-25 tracking-wide">
             {videoData?.title}
           </h1>
 
-          {/* Description */}
           <p className="text-richblack-50 text-sm md:text-base leading-relaxed">
             {videoData?.description}
           </p>
 
-          {/* Gradient Accent */}
           <div className="h-1 w-20 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 rounded-full"></div>
         </div>
       </div>

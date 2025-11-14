@@ -18,7 +18,7 @@ otpSchema.pre("save", async function (next) {
     await mailSender(this.email, "Verification Email from StudyNotion", otpTemplate(this.otp));
     next();
   } catch (error) {
-    console.error("Failed to send OTP email", error);
+   // console.error("Failed to send OTP email", error);
     next(error);
   }
 });

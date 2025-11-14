@@ -54,7 +54,7 @@ exports.createRating = async (req, res) => {
       ratingReview,
     });
   } catch (error) {
-    console.error("Error in createRating:", error);
+   // console.error("Error in createRating:", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -95,7 +95,7 @@ exports.getAverageRating = async (req, res) => {
       averageRating: 0,
     });
   } catch (error) {
-    console.error("Error in getAverageRating:", error);
+   // console.error("Error in getAverageRating:", error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -123,7 +123,7 @@ exports.getAllRating = async (req, res) => {
       data: allReviews,
     });
   } catch (error) {
-    console.error("Error in getAllRating:", error);
+    //console.error("Error in getAllRating:", error);
     return res.status(500).json({
       success: false,
       message: error.message,

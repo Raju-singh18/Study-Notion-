@@ -1,5 +1,5 @@
  // config/cloudinary.js
-
+ 
 const cloudinary = require("cloudinary").v2;
 
 // Function to configure Cloudinary connection

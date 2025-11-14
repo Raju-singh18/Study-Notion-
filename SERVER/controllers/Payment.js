@@ -48,7 +48,7 @@ exports.capturePayment = async (req, res) => {
 
       totalAmount += course.price;
     } catch (error) {
-      console.log(error);
+     // console.log(error);
       return res.status(500).json({
         success: false,
         message: error.message,
@@ -69,7 +69,7 @@ exports.capturePayment = async (req, res) => {
       message: paymentResponse,
     });
   } catch (error) {
-    console.log(error);
+   // console.log(error);
     return res.status(500).json({
       success: false,
       message: "Could not Initiate Order",
@@ -85,13 +85,13 @@ exports.verifyPayment = async (req, res) => {
   const courses = req.body?.courses;
   const userId = req.user.id;
   
-  console.log({
+ /* console.log({
   razorpay_order_id,
   razorpay_payment_id,
   razorpay_signature,
   userId,
   courses
-});
+});*/
 
 
   if (
@@ -182,7 +182,7 @@ const enrolledStudents = async (courses, userId, res) => {
       );
       // console.log("Email Sent Successfully", emailResponse.response);
     } catch (error) {
-         console.log(error);
+       //  console.log(error);
          return res.status(500).json({
             success:false,
             message:error.message,
@@ -213,7 +213,7 @@ exports.sendPaymentSuccessfulEmail = async(req, res) => {
       paymentSuccessEmail(`${enrolledStudent.firstName}`,amount/100, orderId, paymentId)
     )
   } catch (error) {
-    console.log("error in sending mail", error);
+   // console.log("error in sending mail", error);
     return res.status(500).json({
       success:false,
       message:"Could not send email"

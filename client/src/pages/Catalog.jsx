@@ -1,6 +1,3 @@
- 
-
-// ! correction of mostpopular and new button
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiConnector } from "../services/apiConnector";
@@ -16,7 +13,7 @@ const Catalog = () => {
   const [categoryId, setCategoryId] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // NEW: active filter state
+  // Active filter state
   const [activeFilter, setActiveFilter] = useState("popular");
   const [filteredCourses, setFilteredCourses] = useState([]);
 
@@ -41,7 +38,7 @@ const Catalog = () => {
         const res = await getCatalogPageData(categoryId);
         setCatalogPageData(res);
       } catch (error) {
-        console.log(error);
+        consoleconsole.log(error);
       } finally {
         setLoading(false);
       }
@@ -70,16 +67,16 @@ const Catalog = () => {
 
   return (
     <>
-      <div className="bg-richblack-900 text-white min-h-screen">
-        {/* Breadcrumb */}
-        <div className="px-4 md:px-20 py-6 bg-richblack-800 border-b border-richblack-700">
+      <div className="bg-richblack-900 text-white min-h-screen pt-[80px] md:pt-[80px]">
+        {/* Breadcrumb & Category Info */}
+        <div className="px-4 md:px-20 py-6 bg-richblack-800 border-b border-richblack-700 sticky top-0 z-30">
           <p className="text-sm text-richblack-300">
             Home / Catalog /{" "}
             <span className="text-yellow-50">
               {catalogPageData?.data?.selectedCategory?.name}
             </span>
           </p>
-          <h1 className="text-3xl font-semibold mt-2 text-richblack-5">
+          <h1 className="text-3xl font-semibold mt-2 text-richblack-5 break-words">
             {catalogPageData?.data?.selectedCategory?.name}
           </h1>
           <p className="mt-2 text-richblack-200 max-w-3xl">
@@ -87,14 +84,14 @@ const Catalog = () => {
           </p>
         </div>
 
-        {/* Section 1: Courses to Get You Started */}
+        {/* Courses to Get You Started */}
         <div className="px-4 md:px-20 py-10">
           <h2 className="text-2xl font-semibold text-richblack-5 mb-4">
             Courses to Get You Started
           </h2>
 
-          {/* Toggle buttons */}
-          <div className="flex gap-x-4 mb-6">
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap gap-4 mb-6">
             <button
               onClick={() => setActiveFilter("popular")}
               className={`pb-1 font-medium transition ${
@@ -117,15 +114,16 @@ const Catalog = () => {
             </button>
           </div>
 
+          {/* Course Slider */}
           <CourseSlider Courses={filteredCourses} />
         </div>
 
-        {/* Section 2: Top Courses from Other Categories */}
+        {/* Top Courses from Other Categories */}
         <div className="px-4 md:px-20 py-10 bg-richblack-800">
           {catalogPageData?.data?.differentCategory?.length > 0 &&
             catalogPageData.data.differentCategory.map((category, idx) => (
               <div key={category._id || idx} className="mb-12">
-                <h2 className="text-2xl font-semibold text-richblack-5 mb-6">
+                <h2 className="text-2xl font-semibold text-richblack-5 mb-6 break-words">
                   Top Courses in{" "}
                   <span className="text-yellow-50">{category.name}</span>
                 </h2>
@@ -134,12 +132,12 @@ const Catalog = () => {
             ))}
         </div>
 
-        {/* Section 3: Frequently Bought Together */}
+        {/* Frequently Bought Together */}
         <div className="px-4 md:px-20 py-10">
           <h2 className="text-2xl font-semibold text-richblack-5 mb-6">
             Frequently Bought
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {catalogPageData?.data?.mostSellingCourses
               ?.slice(0, 4)
               ?.map((course, index) => (
@@ -148,6 +146,7 @@ const Catalog = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

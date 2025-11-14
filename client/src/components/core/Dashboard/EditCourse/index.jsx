@@ -37,7 +37,7 @@ export default function EditCourse(){
     }
 
   return (
-    <div className='text-white'>
+    <div className='text-white mb-8 mt-4'>
         <h1>Edit Course</h1>
         <div>
           {

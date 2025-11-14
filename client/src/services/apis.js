@@ -61,7 +61,6 @@ export const categories = {
   CREATECATEGORY_API: BASE_URL + "/course/createCategory",
 };
 
-
 // CONTACT-US API
 export const contactusEndpoint = {
   CONTACT_US_API: BASE_URL + "/contact/contactUs",
@@ -74,4 +73,3 @@ export const settingsEndpoints = {
   CHANGE_PASSWORD_API: BASE_URL + "/auth/change-password",
   DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
 };
-

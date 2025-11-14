@@ -33,7 +33,7 @@ exports.sendResetPassword = async (req, res) => {
       },
       { new: true }
     );
-    console.log("Updated User",updatedUser);
+   // console.log("Updated User",updatedUser);
 
     // Construct the reset password URL
     const url = `http://localhost:3000/update-password/${token}`;
@@ -51,7 +51,7 @@ exports.sendResetPassword = async (req, res) => {
         "Reset link sent. Please check your email to change your password.",
     });
   } catch (error) {
-    console.error("Error in sendResetPassword:", error);
+    //console.error("Error in sendResetPassword:", error);
     return res.status(500).json({
       success: false,
       message: "Something went wrong while sending reset password mail.",
@@ -121,7 +121,7 @@ exports.resetPassword = async (req, res) => {
       message: "Password reset successfully.",
     });
   } catch (error) {
-    console.error("Error in resetPassword:", error);
+   // console.error("Error in resetPassword:", error);
     return res.status(500).json({
       success: false,
       message: "Something went wrong while resetting the password.",

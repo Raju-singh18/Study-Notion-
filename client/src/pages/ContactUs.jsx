@@ -1,4 +1,3 @@
-
 import React from "react";
 import ContactUsForm from "../components/ContactPage/ContactUsForm";
 import Footer from "../components/Common/Footer";
@@ -60,38 +59,38 @@ const ContactUs = () => {
   return (
     <div className="bg-richblack-900 text-white">
       {/* Contact Section */}
-      <div className="mx-auto mt-20 w-11/12 max-w-maxContent flex flex-col gap-10 lg:flex-row">
+      <div className="mx-auto mt-20 w-11/12 max-w-maxContent flex flex-col lg:flex-row gap-10">
         {/* Left Info Section */}
-        <div className="lg:w-[40%] space-y-6">
+        <div className="w-full lg:w-2/5 flex flex-col gap-6">
           <div className="flex flex-col gap-6 rounded-2xl bg-gradient-to-br from-richblack-800 to-richblack-700 p-6 shadow-xl">
             {contactOptions.map((item, i) => (
               <div
                 key={i}
-                className="flex flex-col gap-[6px] p-4 rounded-lg transition-all duration-300 hover:bg-richblack-700"
+                className="flex flex-col gap-2 p-4 rounded-lg transition-all duration-300 hover:bg-richblack-700"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-yellow-400">{item.icon}</span>
                   <h2 className="text-lg font-semibold">{item.title}</h2>
                 </div>
                 <p className="text-richblack-200">{item.desc}</p>
-                <p className="font-semibold text-richblack-5">{item.sub}</p>
+                <p className="font-semibold text-richblack-5 break-words">{item.sub}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Right Form Section */}
-        <div className="lg:w-[60%]">
-          <div className="rounded-2xl border border-richblack-600 bg-richblack-800/60 backdrop-blur-md p-8 lg:p-14 shadow-xl">
-            <h1 className="text-4xl font-bold leading-snug text-white">
+        <div className="w-full lg:w-3/5">
+          <div className="rounded-2xl border border-richblack-600 bg-richblack-800/60 backdrop-blur-md p-6 sm:p-10 lg:p-14 shadow-xl">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-snug text-white">
               Got an Idea?{" "}
               <span className="text-yellow-400">We’ve got the skills.</span>{" "}
               Let’s team up.
             </h1>
-            <p className="mt-4 text-lg text-richblack-200">
+            <p className="mt-4 text-base sm:text-lg text-richblack-200">
               Tell us more about yourself and what you’ve got in mind.
             </p>
-            <div className="mt-10">
+            <div className="mt-8 sm:mt-10">
               <ContactUsForm />
             </div>
           </div>
@@ -100,7 +99,7 @@ const ContactUs = () => {
 
       {/* Reviews Section */}
       <div className="mx-auto my-24 w-11/12 max-w-maxContent text-center">
-        <h1 className="text-4xl font-bold mb-6">
+        <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold mb-6">
           What our <span className="text-yellow-400">learners</span> say
         </h1>
         <ReviewSlider />

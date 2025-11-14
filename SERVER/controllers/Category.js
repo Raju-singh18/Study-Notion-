@@ -15,7 +15,7 @@ exports.createCategory = async (req, res) => {
 
     //  Create new category
     const categoryDetails = await Category.create({ name, description });
-    console.log("Category created: ", categoryDetails);
+    // console.log("Category created: ", categoryDetails);
 
     return res.status(200).json({
       success: true,
@@ -71,11 +71,11 @@ exports.CategoryPageDetails = async (req, res) => {
       })
       .exec();
 
-      console.log("SELECTED course", selectedCategory);
+      // console.log("SELECTED course", selectedCategory);
       
    // handle the case when the category is not found
     if (!selectedCategory) {
-      console.log("Category not found");
+     // console.log("Category not found");
       return res.status(404).json({
         success: false,
         message: "Category not found",
@@ -85,29 +85,17 @@ exports.CategoryPageDetails = async (req, res) => {
     const selectedCourses = selectedCategory.courses;
 
     if (!selectedCourses || selectedCourses.length === 0) {
-      console.log("No course found for the selected category.");
+      // console.log("No course found for the selected category.");
       return res.status(404).json({
         success: false,
         message: "No courses found for the selected category",
       });
     }
 
-    //  Get all other categories and their courses
-    // const otherCategories = await Category.find({
-    //   _id: { $ne: categoryId },
-    // }).populate("courses");
-    // let differentCourses = [];
-    // for (const category of otherCategories) {
-    //   differentCourses.push(...category.courses);
-    // }
-       const otherCategories = await Category.find({
+    const otherCategories = await Category.find({
       _id: { $ne: categoryId }
     }).populate("courses");
-    // let differentCategory = [];
-    // for (const category of otherCategories) {
-    //   differentCategory.push(...category);
-    // }
-     // Flatten and filter out categories with no courses
+   
     const differentCategory = otherCategories
       .filter((cat) => cat.courses && cat.courses.length > 0);
 
@@ -136,7 +124,7 @@ exports.CategoryPageDetails = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("Error in CategoryPageDetails", error.message);
+   // console.log("Error in CategoryPageDetails", error.message);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
@@ -148,7 +136,7 @@ exports.CategoryPageDetails = async (req, res) => {
 // add course to category
 exports.addCourseToCategory = async (req, res) => {
   const { courseId, categoryId } = req.body;
-  console.log("Category Id:", categoryId);
+ // console.log("Category Id:", categoryId);
   try {
     const category = await Category.findById(categoryId);
     if (!category) {
